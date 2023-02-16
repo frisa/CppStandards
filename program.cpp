@@ -14,12 +14,12 @@ class A
 
 class B: A
 {
-
+    B() = default;
 };
 
 [[pnoreturn]] static const int functionVoid()
 {
-    std::cout << "this is the call of the function" << std::endl;
+    std::cout << "this is the call of the function: " << __func__ << std::endl;
     return 1;
 }
 
