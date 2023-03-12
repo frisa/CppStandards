@@ -8,7 +8,7 @@ project(myProgramProject
 )
 
 
-add_executable(myProgram WIN32 "program.cpp")
+add_executable(myProgram WIN32 "auto_decltype.cpp")
 
 target_compile_features(myProgram 
     PRIVATE 
