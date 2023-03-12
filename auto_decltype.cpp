@@ -36,17 +36,29 @@ decltype(auto) grab(ContainerType&& container, IndexType&& index)
     return std::forward<ContainerType>(container)[std::forward<IndexType>(index)];
 }
 
-// Simple example
+// Simple example to use the type deduction in generic code
 const std::string message = "test";
 const std::string& foo()
 {
     return message;
 }
 
+// Simple example with perfect returning
+decltype(auto) fooWraper()
+{
+    return foo();
+}
+
 int main()
 {
     auto f1 = foo();
     decltype(auto) f2 = foo();
+    decltype(auto) f3 = fooWraper();
+
+    
+
+    static_assert(std::is_same_v<decltype(f1), std::string >);
     static_assert(std::is_same_v<decltype(f2), const std::string& >);
+    static_assert(std::is_same_v<decltype(f3), const std::string&>);
     return 0;
 }
