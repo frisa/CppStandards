@@ -1,16 +1,12 @@
 cmake_minimum_required(VERSION 3.22)
-
-message("Building cmake files")
-
-project(myProgramProject 
+project(cppStandards 
     VERSION 1.0 
     DESCRIPTION "The application for C++ standards presentation"
 )
-
-
-add_executable(myProgram WIN32 "auto_decltype.cpp")
-
-target_compile_features(myProgram 
-    PRIVATE 
-        cxx_std_11
-)
+add_executable(myProgram WIN32 "program.cpp")
+set_property(TARGET myProgram PROPERTY CXX_STANDARD 17)
+target_sources(myProgram
+    PRIVATE
+        "Cpp11_AutoDecltype.cpp"
+    PUBLIC
+        "Cpp11_AutoDecltype.hpp")
