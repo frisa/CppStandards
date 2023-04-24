@@ -2,7 +2,9 @@
 
 class Cpp11_AutoDecltype{
 public:
-    void auto_TemplateTypeDeduction();
+    void auto_TemplateTypeDeductionReferences();
+    void auto_TemplateTypeDeductionUniversalReferences();
+    void auto_TemplateTypeDeductionByValueParameter();
     void auto_TemplateArgumentDeduction();
     void auto_SimpleTypeDeduction();
     void auto_ConstTypeDeduction();

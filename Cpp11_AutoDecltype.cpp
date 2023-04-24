@@ -125,7 +125,7 @@ void f3(T* param)
     std::cout << "Type is: " << typeid(param).name() << std::endl; 
 };
 
-void Cpp11_AutoDecltype::auto_TemplateTypeDeduction()
+void Cpp11_AutoDecltype::auto_TemplateTypeDeductionReferences()
 {
     // Type reference deduction
     // - remove reference
@@ -152,6 +152,37 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeduction()
     const auto& v4 = x;     static_assert(std::is_same<decltype(v4), const int&>::value);       // auto = int
     const auto& v5 = cx;    static_assert(std::is_same<decltype(v5), const int&>::value);       // auto = int
     const auto& v6 = rx;    static_assert(std::is_same<decltype(v6), const int&>::value);       // auto = int
+}
+
+template<typename T>
+void f4(T&& param){
+    //std::cout << "Type is: " << typeid(param).name() << std::endl;
+}
+/*
+    universal reference: look like rvalue references, BUT what it represents depends what it is initialized with
+*/
+void Cpp11_AutoDecltype::auto_TemplateTypeDeductionUniversalReferences()
+{
+    int x = 22;
+    const int cx = x;
+    const int& rx = x;
+    f4(x);      // x is lvalue, T = int&, param = int&
+    f4(cx);     // cx is lvalue, T = const int&, param = const int&
+    f4(rx);     // rx is lvalue, T = const int&, param = const int&
+    f4(22);     // x is rvalue (no special handling), T = int, param = int&&
+}
+
+template<typename T>
+void f5(T param){};
+
+void Cpp11_AutoDecltype::auto_TemplateTypeDeductionByValueParameter()
+{
+    int x = 22;
+    const int cx = x;
+    const int& rx = x;
+    f5(x);           // T = int, param = int
+    f5(cx);          // T = int, param = int
+    f5(rx);          // T = int, param = int
 }
 
 void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
