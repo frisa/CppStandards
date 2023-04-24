@@ -6,7 +6,7 @@
 
     specifies that the data type is being automaticaly deduced from the initializer
 
-    - C++ 11 for variables, specifies that the return type will be deduce from its return statements
+    - C++ 11 for variables, specifies that the type of the variable that is being declared will be automatically deduced from its initializer
     - C++ 14 for functions, specifies that the return type will be deduced from its return statements
     - C++ 17 for non-type template parameters, specifies that the type will be deduced from the argument
 
@@ -76,27 +76,27 @@ namespace{
 
 /*
     Template Argument Deduction:
-    in order to instantiate a function template, every template argument must be knows, but not every template argument
-    has to be specified. 
-    When possible, the compiler will deduce the missing template arguments from the function arguments. 
-    This occurs when a function call is attempted, when an address of a function template is taken, and in some other contexts
+    in order to instantiate a function template:
+    - every template argument must be knows, but not every template argument has to be specified. 
+
+    the compiler will deduce the missing template arguments from the function arguments in folowing cases:
+    - function call is attended
+    - when an address of a function template is taken
+    - and in some other contexts
 
     This mechanism makes it possible to use template operators, since there is no syntax to specify template arguments for an operator
 */
 
 void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
 {
-    double d{0.0};
-    double argument{0.0};
-
-    // examples of the type deductions from input arguments
-    int i = convert<int>(d);
-    i = convert<int, double>(3);                    // both arguments are known and specified -> no deduction is needed
+    // examples of deduction from the initializer
+    int i = convert<int, double>(3);                // both arguments are known and specified -> no deduction is needed
     i = convert<int>(3);                            // first argument is specified and second argument is just known
-    i = convert<int>(argument);                     // first argument is specified and second argument is deduced from variable
-    int (*ptr)(double) = convert<int, double>;      // both arguments are known and specified
-    int (*ptr1)(double) = convert<int>;             // first argument is specified and second argument is deduces from function poiter parameter
-    double (*ptr2)(int) = convert<double>;          // the new function address is assigned as the argument types has changed
+    double argument{0.0};
+    i = convert<int>(argument);                             // first argument is specified and second argument is deduced from variable
+    int (*Ptr)(double) = convert<int, double>;              // both arguments are known and specified
+    int (*sameLikePtr)(double) = convert<int>;              // first argument is specified and second argument is deduces from function poiter parameter
+    double (*differetnFromPtr)(int) = convert<double>;      // the new function address is assigned as the argument types has changed
     deduceFromInitList({1, 2, 3});                  // the type is deduced from the items data types, but must be the same type
     deduceFromInitListSize({1, 2, 3, 4});           // the type is deduced from the items data types and the size too
     deduceFromNonTypeTemplateParameter<int, 5>();   // the type is deduced from the constexpr in non-type template parameter
@@ -120,6 +120,16 @@ void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
 
     // C++ 11 usage for unnamed types in the lambda expressions
     //auto lambda = [](int x){return x+3};
+
+    // exmaple of deduction for the class template
+    std::pair<int, std::string> pairSpecified(1, "");                           // pair class constructed
+    static_assert(std::is_same<decltype(pairSpecified.first), int>::value);
+
+    std::pair deducePair {1, 2.4};                                              // pair class constructed and deduced
+    static_assert(std::is_same<decltype(deducePair.second), double>::value);
+
+    std::tuple<int, double, std::string> deducedTuple;
+    std::cout << "Tuple type of 0 element is:" << typeid(std::get<0>(deducedTuple)).name() << std::endl;
 }
 
 void Cpp11_AutoDecltype::auto_SimpleTypeDeduction()
