@@ -34,10 +34,20 @@ namespace{
         }
     };
    
+    template<typename A, typename B>
+    void testFunction(A a, B b)
+    {
+        std::cout << "A is type: " << typeid(a).name() << std::endl;
+        std::cout << "B is type: " << typeid(b).name() << std::endl;
+    }
+
     template<typename To, typename From>
-    To convert(From f){
-        std::cout << "To data type is: " << typeid(f).name() << std::endl;
-        return static_cast<To>(f);
+    To convert(From value){
+        To returnValue;
+        returnValue = static_cast<To>(value);
+        std::cout << "From type is: " << typeid(value).name() << std::endl;
+        std::cout << "To type is: " << typeid(returnValue).name() << std::endl;
+        return static_cast<To>(value);
     }
 
     template<typename T, auto cnt>
@@ -90,10 +100,11 @@ namespace{
 void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
 {
     // examples of deduction from the initializer
-    int i = convert<int, double>(3);                // both arguments are known and specified -> no deduction is needed
-    i = convert<int>(3);                            // first argument is specified and second argument is just known
+    testFunction<int, double>(1, 2);                // both arguments are known and specified -> no deduction is needed
+    testFunction<int>(1, 2.0);                      // first argument is specified and second argument is just known
     double argument{0.0};
-    i = convert<int>(argument);                             // first argument is specified and second argument is deduced from variable
+    testFunction<int>(1, argument);                         // first argument is specified and second argument is deduced from variable
+
     int (*Ptr)(double) = convert<int, double>;              // both arguments are known and specified
     int (*sameLikePtr)(double) = convert<int>;              // first argument is specified and second argument is deduces from function poiter parameter
     double (*differetnFromPtr)(int) = convert<double>;      // the new function address is assigned as the argument types has changed
@@ -103,13 +114,25 @@ void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
  
     std::cout << "This text will be used for deduction" << std::endl;  // template argument deduction makes possible to deduce argument type for operators
 
+    // exmaple of deduction for the class template
+    std::pair<int, std::string> pairSpecified(1, "");                           // pair class constructed
+    static_assert(std::is_same<decltype(pairSpecified.first), int>::value);
+
+    std::pair deducePair {1, 2.4};                                              // pair class constructed and deduced
+    static_assert(std::is_same<decltype(deducePair.second), double>::value);
+
+    std::tuple<int, double, std::string> deducedTuple;                          // tuple class constructed and deduced
+    std::cout << "Tuple type of 0 element is:" << typeid(std::get<0>(deducedTuple)).name() << std::endl;
+
     // exmaples of deduction from the function calls
-    i = convert<int>(getDouble());                  // first argument is specified and second argument is deduced from function
+    auto i = convert<int>(getDouble());                  // first argument is specified and second argument is deduced from function
 
     // C++ 17 type deduction in structured binding
     int a[2] = {1, 2};
     auto [x, y] = a;        // creates e[2], copies a into e
+    static_assert(std::is_same<decltype(x), int>::value);
     x = 123;                // then x refers to e[0], y refers to e[1]
+    
     auto& [xr, yr] = a;     // xr refers to a[0], yr referes to a[1]
     xr =  123;              // will change a[0]
 
@@ -120,16 +143,6 @@ void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
 
     // C++ 11 usage for unnamed types in the lambda expressions
     //auto lambda = [](int x){return x+3};
-
-    // exmaple of deduction for the class template
-    std::pair<int, std::string> pairSpecified(1, "");                           // pair class constructed
-    static_assert(std::is_same<decltype(pairSpecified.first), int>::value);
-
-    std::pair deducePair {1, 2.4};                                              // pair class constructed and deduced
-    static_assert(std::is_same<decltype(deducePair.second), double>::value);
-
-    std::tuple<int, double, std::string> deducedTuple;
-    std::cout << "Tuple type of 0 element is:" << typeid(std::get<0>(deducedTuple)).name() << std::endl;
 }
 
 void Cpp11_AutoDecltype::auto_SimpleTypeDeduction()
