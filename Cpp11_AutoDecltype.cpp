@@ -1,6 +1,9 @@
 #include "Cpp11_AutoDecltype.hpp"
 #include <memory>
 #include <type_traits>
+#include <vector>
+#include <string>
+#include <functional>
 
 /*
 
@@ -33,6 +36,13 @@ namespace{
             std::cout << "copy-constructor called" << std::endl;
         }
     };
+
+    void fcnVoid(){
+    }
+
+    int fcnIntRetInt(double value){
+        return static_cast<int>(value +1);
+    }
    
     template<typename A, typename B>
     void testFunction(A a, B b)
@@ -97,6 +107,53 @@ namespace{
     This mechanism makes it possible to use template operators, since there is no syntax to specify template arguments for an operator
 */
 
+template<typename T>
+void f1(T& param)
+{
+    std::cout << "Type is: " << typeid(param).name() << std::endl; 
+};
+
+template<typename T>
+void f2(const T& param)
+{
+    std::cout << "Type is: " << typeid(param).name() << std::endl; 
+};
+
+template<typename T>
+void f3(T* param)
+{
+    std::cout << "Type is: " << typeid(param).name() << std::endl; 
+};
+
+void Cpp11_AutoDecltype::auto_TemplateTypeDeduction()
+{
+    // Type reference deduction
+    // - remove reference
+    // - pattern matching
+    int x = 22;
+    const int cx = x;
+    const int& rx = x;
+    // T& param
+    f1(x);   // -> T = int , param = int&
+    f1(cx);  // -> T = const int, param = const int&
+    f1(rx);  // -> T = const int, param = const int&
+    //const T& param
+    f2(x);   // -> T = int, param = const int&
+    f2(cx);  // -> T = int, param = const int&
+    f2(rx);  // -> T = int, param = const int&
+    //T* param
+    const int* pcx = &x;
+    f3(&x);   // -> T = int, param = int*
+    f3(pcx);  // -> T = const int, param = const int*
+    // auto deduction
+    auto& v1 = x;           static_assert(std::is_same<decltype(v1), int&>::value);             // auto = int
+    auto& v2 = cx;          static_assert(std::is_same<decltype(v2), const int&>::value);       // auto = const int
+    auto& v3 = rx;          static_assert(std::is_same<decltype(v3), const int&>::value);       // auto = const int
+    const auto& v4 = x;     static_assert(std::is_same<decltype(v4), const int&>::value);       // auto = int
+    const auto& v5 = cx;    static_assert(std::is_same<decltype(v5), const int&>::value);       // auto = int
+    const auto& v6 = rx;    static_assert(std::is_same<decltype(v6), const int&>::value);       // auto = int
+}
+
 void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
 {
     // examples of deduction from the initializer
@@ -114,25 +171,38 @@ void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
  
     std::cout << "This text will be used for deduction" << std::endl;  // template argument deduction makes possible to deduce argument type for operators
 
-    // exmaple of deduction for the class template
-    std::pair<int, std::string> pairSpecified(1, "");                           // pair class constructed
+    // exmaple of deduction for the class template C++ 17
+    std::pair<int, std::string> pairSpecified(1, ""); // pair class constructed
     static_assert(std::is_same<decltype(pairSpecified.first), int>::value);
 
-    std::pair deducePair {1, 2.4};                                              // pair class constructed and deduced
-    static_assert(std::is_same<decltype(deducePair.second), double>::value);
+    std::pair deducePair{1, 2.4f}; // pair class constructed and deduced
+    static_assert(std::is_same<decltype(deducePair.second), float>::value);
 
-    std::tuple<int, double, std::string> deducedTuple;                          // tuple class constructed and deduced
-    std::cout << "Tuple type of 0 element is:" << typeid(std::get<0>(deducedTuple)).name() << std::endl;
+    std::tuple deducedTuple(1, 2.4, "");                                                                 // tuple class constructed and deduced
+    std::cout << "Tuple type of 0 element is:" << typeid(std::get<0>(deducedTuple)).name() << std::endl; // why I cannot use the static_assert
+    std::tuple deducedTupleFromFunction([=](int x)
+                                        { return static_cast<double>(x); },
+                                        [&](std::string text)
+                                        { std::cout << text; });
+
+    std::vector v1{1, 2, 3}; // vector class deduction
+    std::cout << "Vector type of 0 element is:" << typeid(v1[0]).name() << std::endl;
+
+    std::function fcnObj(&fcnIntRetInt); // function class constructed and deduced
+    auto ret = fcnObj(123);
+    static_assert(std::is_same<decltype(ret), int>::value);
+
+    std::function fcnObjVoid(&fcnVoid); // the C++ 17 has deduciton guides for this case
 
     // exmaples of deduction from the function calls
-    auto i = convert<int>(getDouble());                  // first argument is specified and second argument is deduced from function
+    auto i = convert<int>(getDouble()); // first argument is specified and second argument is deduced from function
 
     // C++ 17 type deduction in structured binding
     int a[2] = {1, 2};
-    auto [x, y] = a;        // creates e[2], copies a into e
+    auto [x, y] = a; // creates e[2], copies a into e
     static_assert(std::is_same<decltype(x), int>::value);
     x = 123;                // then x refers to e[0], y refers to e[1]
-    
+
     auto& [xr, yr] = a;     // xr refers to a[0], yr referes to a[1]
     xr =  123;              // will change a[0]
 
@@ -143,6 +213,9 @@ void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
 
     // C++ 11 usage for unnamed types in the lambda expressions
     //auto lambda = [](int x){return x+3};
+
+    // C++ 17 Deduction guid
+
 }
 
 void Cpp11_AutoDecltype::auto_SimpleTypeDeduction()

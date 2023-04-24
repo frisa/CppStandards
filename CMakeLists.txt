@@ -5,6 +5,7 @@ project(cppStandards
 )
 add_executable(myProgram WIN32 "program.cpp")
 set_property(TARGET myProgram PROPERTY CXX_STANDARD 17)
+set_property(TARGET myProgram PROPERTY CXX_STANDARD_REQUIRED ON)
 target_sources(myProgram
     PRIVATE
         "Cpp11_AutoDecltype.cpp"
