@@ -7,7 +7,7 @@
 
 /*
 
-    specifies that the data type is being automaticaly deduced from the initializer
+    auto - specifies that the data type is being automaticaly deduced from the initializer
 
     - C++ 11 for variables, specifies that the type of the variable that is being declared will be automatically deduced from its initializer
     - C++ 14 for functions, specifies that the return type will be deduced from its return statements
@@ -16,6 +16,10 @@
     syntax:
     <type-constraint> auto              : type is deduced using the rules for template argument deduction
     <type-constraint> decltype(auto)    : type is deduced from decltype(expresion) the expression is used as initializer
+
+    reference: 
+        Scott Meyers - Type Deduction and why you care
+        Scott Meyers - Effective Modern C++
 
 */
 
@@ -215,6 +219,11 @@ void f4(T &&param)
     universal reference: look like rvalue references, BUT what it represents depends what it is initialized with (lvalue/rvalue reference)
     - only case whan the reference is deduced
     - reference colapsing
+    reference collapsing:
+    & & -> &
+    & && -> &
+    && & -> &
+    && && -> &&
 */
 void Cpp11_AutoDecltype::auto_TemplateTypeDeductionUniversalReferences()
 {
@@ -421,7 +430,7 @@ decltype(auto) sensitiveOnImplementationNoParentheses()
 decltype(auto) sensitiveOnImplementationWithParentheses()
 {
     int ret = 1;
-    //return (ret); // returns int& to the local variable !!
+    // return (ret); // returns int& to the local variable !!
     return 0;
 }
 
@@ -429,6 +438,21 @@ void Cpp11_AutoDecltype::decltype_auto_DeductionOfReturnType()
 {
     // lookupValue() = 0;
     lookupValueAndChange() = 0; // as it returns reference it is ok
+}
+
+void fcn(const std::string& data){};
+void fcn(std::string&& data){};
+template<typename T>
+void wrapFcn(T&& data)
+{
+    fcn(std::forward<T>(data)); // conditional cast to the r-value
+}
+
+void Cpp11_AutoDecltype::auto_RvalueLvalue()
+{
+    std::string data{"Some data"};
+    wrapFcn(data);
+    wrapFcn(std::move(data)); // unconditional cast to the r-value
 }
 
 /*

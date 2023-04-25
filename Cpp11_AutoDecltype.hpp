@@ -4,6 +4,7 @@ class Cpp11_AutoDecltype{
 public:
 
     // auto type deduction
+    void auto_RvalueLvalue();
     void auto_TemplateTypeDeductionReferences();
     void auto_TemplateTypeDeductionUniversalReferences();
     void auto_TemplateTypeDeductionByValueParameter();
