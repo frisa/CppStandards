@@ -5,7 +5,7 @@ public:
 
     // auto type deduction
     void auto_RvalueLvalue();
-    void auto_TemplateTypeDeductionReferences();
+    void auto_TemplateTypeDeduction_NormalReferences();
     void auto_TemplateTypeDeductionUniversalReferences();
     void auto_TemplateTypeDeductionByValueParameter();
     void auto_TypeDecutionBracedInitializer();

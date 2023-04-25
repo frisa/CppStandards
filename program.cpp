@@ -5,7 +5,7 @@
 int main()
 {
     std::unique_ptr<Cpp11_AutoDecltype> cpp = std::make_unique<Cpp11_AutoDecltype>();
-    cpp->auto_TemplateTypeDeductionReferences();
+    cpp->auto_TemplateTypeDeduction_NormalReferences();
     cpp->auto_TemplateTypeDeductionUniversalReferences();
     cpp->auto_TemplateTypeDeductionByValueParameter();
     cpp->decltype_DeductionOfVariable();

@@ -17,7 +17,7 @@
     <type-constraint> auto              : type is deduced using the rules for template argument deduction
     <type-constraint> decltype(auto)    : type is deduced from decltype(expresion) the expression is used as initializer
 
-    reference: 
+    reference:
         Scott Meyers - Type Deduction and why you care
         Scott Meyers - Effective Modern C++
 
@@ -107,6 +107,25 @@ namespace
     {
         std::cout << "type of variable: " << typeid(variable_string).name() << std::endl;
     }
+
+    template <typename T>
+    void f1(T &param)
+    {
+        std::cout << "Type is: " << typeid(param).name() << std::endl;
+    };
+
+    template <typename T>
+    void f2(const T &param)
+    {
+        std::cout << "Type is: " << typeid(param).name() << std::endl;
+    };
+
+    template <typename T>
+    void f3(T *param)
+    {
+        std::cout << "Type is: " << typeid(param).name() << std::endl;
+    };
+
 }
 
 /*
@@ -147,36 +166,16 @@ namespace
                 4) lambda init capture
 */
 
-template <typename T>
-void f1(T &param)
+void Cpp11_AutoDecltype::auto_TemplateTypeDeduction_NormalReferences()
 {
-    std::cout << "Type is: " << typeid(param).name() << std::endl;
-};
-
-template <typename T>
-void f2(const T &param)
-{
-    std::cout << "Type is: " << typeid(param).name() << std::endl;
-};
-
-template <typename T>
-void f3(T *param)
-{
-    std::cout << "Type is: " << typeid(param).name() << std::endl;
-};
-
-void Cpp11_AutoDecltype::auto_TemplateTypeDeductionReferences()
-{
-    // Type reference deduction
-    // - remove reference
-    // - pattern matching
     int x = 22;
     const int cx = x;
     const int &crx = x;
-    // CASE 1: T& param
-    f1(x);   // -> T = int , param = int&
-    f1(cx);  // -> T = const int, param = const int&
-    f1(crx); // -> T = const int, param = const int&
+
+    // CASE 1: f1(T& param)
+    f1(x);   // -> T = int , param = int&                       , pattern matching: int -> T&
+    f1(cx);  // -> T = const int, param = const int&            , pattern matching: const int -> T&
+    f1(crx); // -> T = const int, param = const int&            , pattten matching: const int& -> T&
 
     auto &v1 = x;
     static_assert(std::is_same<decltype(v1), int &>::value); // auto = int
@@ -187,10 +186,10 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeductionReferences()
     auto &v3 = crx;
     static_assert(std::is_same<decltype(v3), const int &>::value); // auto = const int
 
-    // CASE 2: const T& param
-    f2(x);   // -> T = int, param = const int&
-    f2(cx);  // -> T = int, param = const int&
-    f2(crx); // -> T = int, param = const int&
+    // CASE 2: f1(const T& param)
+    f2(x);   // -> T = int, param = const int&                  , pattern matching: const int -> const T&
+    f2(cx);  // -> T = int, param = const int&                  , pattern matching: const int -> const T&
+    f2(crx); // -> T = int, param = const int&                  , pattern matching: const int& -> const T&
 
     const auto &v4 = x;
     static_assert(std::is_same<decltype(v4), const int &>::value); // auto = int
@@ -201,7 +200,7 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeductionReferences()
     const auto &v6 = crx;
     static_assert(std::is_same<decltype(v6), const int &>::value); // auto = int
 
-    // CASE 3: T* param
+    // CASE 3: f(T* param)
     const int *pcx = &x;
     f3(&x);  // -> T = int, param = int*
     f3(pcx); // -> T = const int, param = const int*
@@ -220,20 +219,22 @@ void f4(T &&param)
     - only case whan the reference is deduced
     - reference colapsing
     reference collapsing:
-    & & -> &
-    & && -> &
-    && & -> &
-    && && -> &&
+            & & -> &
+            & && -> &
+            && & -> &
+            && && -> &&
+       
 */
 void Cpp11_AutoDecltype::auto_TemplateTypeDeductionUniversalReferences()
 {
+    // CASE 4: f(T&& param)
     int x = 22;
     const int cx = x;
     const int &crx = x;
-    f4(x);   // x is lvalue, T = int&, param = int&
-    f4(cx);  // cx is lvalue, T = const int&, param = const int&
-    f4(crx); // rx is lvalue, T = const int&, param = const int&
-    f4(22);  // x is rvalue (no special handling), T = int, param = int&&
+    f4(x);   // x is lvalue, T = int&, param = int&                         , pattern matching: int (lvalue) -> T&&
+    f4(cx);  // cx is lvalue, T = const int&, param = const int&            , pattern matching: const int (lvalue) -> T&&
+    f4(crx); // rx is lvalue, T = const int&, param = const int&            , pattern matching: const int& (lvalue) -> T&&
+    f4(22);  // x is rvalue (no special handling), T = int, param = int&&   , pattern matching: <22> (rvalue) -> T&&
 
     auto &v1 = x;
     static_assert(std::is_same<decltype(v1), int &>::value); // auto = int
@@ -253,6 +254,7 @@ void f5(T param){};
 
 void Cpp11_AutoDecltype::auto_TemplateTypeDeductionByValueParameter()
 {
+    // CASE 5: f(T param)
     int x = 22;
     const int cx = x;
     const int &crx = x;
@@ -440,10 +442,10 @@ void Cpp11_AutoDecltype::decltype_auto_DeductionOfReturnType()
     lookupValueAndChange() = 0; // as it returns reference it is ok
 }
 
-void fcn(const std::string& data){};
-void fcn(std::string&& data){};
-template<typename T>
-void wrapFcn(T&& data)
+void fcn(const std::string &data){};
+void fcn(std::string &&data){};
+template <typename T>
+void wrapFcn(T &&data)
 {
     fcn(std::forward<T>(data)); // conditional cast to the r-value
 }
