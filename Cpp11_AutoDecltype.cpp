@@ -27,8 +27,9 @@
                     function<123>();
 
     syntax:
-    <type-constraint> auto              : type is deduced using the rules for template argument deduction
-    <type-constraint> decltype(auto)    : type is deduced from decltype(expresion) the expression is used as initializer
+    <type-constraint> auto                  : type is deduced using the rules for template argument deduction
+    <type-constraint> decltype(expresion)   : return the type needed for the output of the expleression uchar + uchar = int
+    <type-constraint> decltype(auto)        : type is deduced from decltype(expresion) the expression is used as initializer
 
     reference:
         Scott Meyers - Type Deduction and why you care
@@ -391,6 +392,22 @@ void Cpp11_AutoDecltype::auto_ConstTypeDeduction()
     static_assert(std::is_same<decltype(auto_variable2), int>::value, "variable does not have expected type");
 }
 #endif
+template<typename T>
+auto AddTwo(T x) -> decltype(x+x)
+{
+    return x + x; // two unsigned chars can produce the int
+}
+const int& someExpression()
+{
+    static int x{0};
+    return x;
+};
+auto someExpresstionAutoWrapper(){return someExpression();};
+decltype(auto) someExpresstionDecltypeAutoWrapper(){return someExpression();};
+auto someExpresstionDecltypeAutoWrapperTrailing() -> decltype(auto)
+{
+    return someExpression();
+};
 /*
     decltype returns exactly the declared type of the variable so CVR will keep as deduced type
 */
@@ -404,6 +421,21 @@ void Cpp11_AutoDecltype::decltype_DeductionOfVariable()
 
     decltype(crx) new_crx = x;
     static_assert(std::is_same<decltype(new_crx), const int &>::value);
+
+    decltype(auto) shallBeInt = AddTwo(static_cast<unsigned char>(99999));
+    static_assert(std::is_same<decltype(shallBeInt), int>::value);
+
+    auto ret1 = someExpression();
+    static_assert(std::is_same<decltype(ret1), int>::value); // this does use the template type deduction
+
+    decltype(auto) ret2 = someExpresstionAutoWrapper();
+    static_assert(std::is_same<decltype(ret2), int>::value); // THIS WILL RETURNE WRONG DEDUCED DATA TYPE - perfekt forwarding 
+
+    decltype(auto) ret3 = someExpresstionDecltypeAutoWrapper();
+    static_assert(std::is_same<decltype(ret3), const int&>::value); // this will return proper data type deduced from the declaration
+
+    decltype(auto) ret4 = someExpresstionDecltypeAutoWrapperTrailing();
+    static_assert(std::is_same<decltype(ret4), const int&>::value); // this will return proper data type deduced from the declaration with trailing
 }
 /*
     decltype of the expression is more complicated as it can be lvalue or rvalue
