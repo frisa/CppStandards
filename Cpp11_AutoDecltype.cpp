@@ -418,15 +418,16 @@ decltype(auto) sensitiveOnImplementationNoParentheses()
     return ret; // returns int
 }
 
-decltype(auto) sensitiveOnImplementationNoParentheses()
+decltype(auto) sensitiveOnImplementationWithParentheses()
 {
     int ret = 1;
-    return (ret); // returns int& to the local variable !! 
+    //return (ret); // returns int& to the local variable !!
+    return 0;
 }
 
 void Cpp11_AutoDecltype::decltype_auto_DeductionOfReturnType()
 {
-    //lookupValue() = 0;
+    // lookupValue() = 0;
     lookupValueAndChange() = 0; // as it returns reference it is ok
 }
 
