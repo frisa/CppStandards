@@ -202,8 +202,8 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeductionReferences()
     f3(&x);  // -> T = int, param = int*
     f3(pcx); // -> T = const int, param = const int*
 
-    const auto* v7 = &x;
-    static_assert(std::is_same<decltype(v7), const int*>::value); // auto = int
+    const auto *v7 = &x;
+    static_assert(std::is_same<decltype(v7), const int *>::value); // auto = int
 }
 
 template <typename T>
@@ -213,27 +213,30 @@ void f4(T &&param)
 }
 /*
     universal reference: look like rvalue references, BUT what it represents depends what it is initialized with (lvalue/rvalue reference)
+    - only case whan the reference is deduced
+    - reference colapsing
 */
 void Cpp11_AutoDecltype::auto_TemplateTypeDeductionUniversalReferences()
 {
     int x = 22;
     const int cx = x;
     const int &crx = x;
-    f4(x);  // x is lvalue, T = int&, param = int&
-    f4(cx); // cx is lvalue, T = const int&, param = const int&
+    f4(x);   // x is lvalue, T = int&, param = int&
+    f4(cx);  // cx is lvalue, T = const int&, param = const int&
     f4(crx); // rx is lvalue, T = const int&, param = const int&
-    f4(22); // x is rvalue (no special handling), T = int, param = int&&
+    f4(22);  // x is rvalue (no special handling), T = int, param = int&&
 
-    auto& v1 = x;
-    static_assert(std::is_same<decltype(v1), int&>::value);     // auto = int
+    auto &v1 = x;
+    static_assert(std::is_same<decltype(v1), int &>::value); // auto = int
 
-    auto& v2 = cx;
-    static_assert(std::is_same<decltype(v2), const int&>::value);     // auto = const int
+    auto &v2 = cx;
+    static_assert(std::is_same<decltype(v2), const int &>::value); // auto = const int
 
-    auto& v3 = crx;
-    static_assert(std::is_same<decltype(v3), const int&>::value);     // auto = const int
+    auto &v3 = crx;
+    static_assert(std::is_same<decltype(v3), const int &>::value); // auto = const int
 
-
+    auto &&v4 = 22;
+    static_assert(std::is_same<decltype(v4), int &&>::value); // auto = int&&
 }
 
 template <typename T>
@@ -243,10 +246,42 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeductionByValueParameter()
 {
     int x = 22;
     const int cx = x;
-    const int &rx = x;
-    f5(x);  // T = int, param = int
-    f5(cx); // T = int, param = int
-    f5(rx); // T = int, param = int
+    const int &crx = x;
+    f5(x);   // T = int, param = int
+    f5(cx);  // T = int, param = int
+    f5(crx); // T = int, param = int
+
+    auto v1 = x;
+    static_assert(std::is_same<decltype(v1), int>::value); // auto = int
+
+    auto v2 = cx;
+    static_assert(std::is_same<decltype(v2), int>::value); // auto = int
+
+    auto v3 = crx;
+    static_assert(std::is_same<decltype(v3), int>::value); // auto = int
+
+    // Non-Reference, Non-Pointer auto deduction
+    // auto is newer deduced as reference type
+    auto v4 = crx;   // type = int
+    auto &v5 = crx;  // type = const int&
+    auto &&v6 = crx; // type = const int& (rx is lvalue)
+}
+
+/*
+    auto type dedution is same as template type deduction, EXCEPT with braced initializers
+    - template type deduciton fails
+    - audo deduces std::initializer_list
+*/
+template <typename T>
+void f6(T param){};
+
+void Cpp11_AutoDecltype::auto_TypeDecutionBracedInitializer()
+{
+    // f6({1,2,3}); // ERROR! type deduction fail as the braced initializer doed not have type
+    // auto x1{1, 2, 3};    // type = std::initializer_list<int> until friday !!! N3922 is not part of the C++14
+    auto x1{1};          // direct init w/1 element x = int
+    auto x2 = {1, 2, 3}; // type = std::initializer_list<int>
+    auto x3 = {1};  // according C++ 14 is initializer_list<int>
 }
 
 void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
