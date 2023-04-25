@@ -2,6 +2,8 @@
 
 class Cpp11_AutoDecltype{
 public:
+
+    // auto type deduction
     void auto_TemplateTypeDeductionReferences();
     void auto_TemplateTypeDeductionUniversalReferences();
     void auto_TemplateTypeDeductionByValueParameter();
@@ -9,4 +11,10 @@ public:
     void auto_TemplateArgumentDeduction();
     void auto_SimpleTypeDeduction();
     void auto_ConstTypeDeduction();
+
+    // decltype type deduction
+    void decltype_DeductionOfVariable();
+    void decltype_DeductionOfExpressionLvalue();
+    void decltype_auto_DeductionOfReturnType();
+
 };

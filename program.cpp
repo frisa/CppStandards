@@ -8,6 +8,8 @@ int main()
     cpp->auto_TemplateTypeDeductionReferences();
     cpp->auto_TemplateTypeDeductionUniversalReferences();
     cpp->auto_TemplateTypeDeductionByValueParameter();
+    cpp->decltype_DeductionOfVariable();
+    cpp->decltype_DeductionOfExpression();
     //cpp->auto_TemplateArgumentDeduction();
     //cpp->auto_SimpleTypeDeduction();
     //cpp->auto_ConstTypeDeduction();

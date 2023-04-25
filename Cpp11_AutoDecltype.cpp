@@ -281,7 +281,7 @@ void Cpp11_AutoDecltype::auto_TypeDecutionBracedInitializer()
     // auto x1{1, 2, 3};    // type = std::initializer_list<int> until friday !!! N3922 is not part of the C++14
     auto x1{1};          // direct init w/1 element x = int
     auto x2 = {1, 2, 3}; // type = std::initializer_list<int>
-    auto x3 = {1};  // according C++ 14 is initializer_list<int>
+    auto x3 = {1};       // according C++ 14 is initializer_list<int>
 }
 
 void Cpp11_AutoDecltype::auto_TemplateArgumentDeduction()
@@ -366,3 +366,72 @@ void Cpp11_AutoDecltype::auto_ConstTypeDeduction()
     auto auto_variable2{type_variable2};
     static_assert(std::is_same<decltype(auto_variable2), int>::value, "variable does not have expected type");
 }
+/*
+    decltype returns exactly the declared type of the variable so CVR will keep as deduced type
+*/
+void Cpp11_AutoDecltype::decltype_DeductionOfVariable()
+{
+    int x = 10;
+    static_assert(std::is_same<decltype(x), int>::value);
+
+    const auto &crx = x;
+    static_assert(std::is_same<decltype(crx), const int &>::value);
+}
+/*
+    decltype of the expression is more complicated as it can be lvalue or rvalue
+    - if it is lvalue -> deduce the type and place lvalue reference on it
+    - if it is rvalue ->
+*/
+void Cpp11_AutoDecltype::decltype_DeductionOfExpressionLvalue()
+{
+    int arr[10];
+    arr[0] = 5;                                                  // it acts as reference because it change the value
+    static_assert(std::is_same<decltype(arr[0]), int &>::value); // the type is int but is act as int&, because it is lvalue expression
+}
+
+/*
+    C++ 14
+    deduction of the return type
+    - auto return type deduction
+        - template type deduction
+    - decltype(auto) return type
+        - "I want to use the automaticly deduce the return type with decltype rules"
+*/
+
+// Example: I want to return just value not reference
+// auto gives proper behaviour as it can newer be reference
+auto lookupValue()
+{
+    static std::vector<int> values = {1, 2, 3};
+    return values[0];
+}
+
+decltype(auto) lookupValueAndChange()
+{
+    static std::vector<int> values = {1, 2, 3};
+    return values[0];
+}
+
+decltype(auto) sensitiveOnImplementationNoParentheses()
+{
+    int ret = 1;
+    return ret; // returns int
+}
+
+decltype(auto) sensitiveOnImplementationNoParentheses()
+{
+    int ret = 1;
+    return (ret); // returns int& to the local variable !! 
+}
+
+void Cpp11_AutoDecltype::decltype_auto_DeductionOfReturnType()
+{
+    //lookupValue() = 0;
+    lookupValueAndChange() = 0; // as it returns reference it is ok
+}
+
+/*
+    Rules of thumb:
+    - Use auto if a reference type would never be correct
+    - Use decltype(auto) only if a reference type could be correct
+*/
