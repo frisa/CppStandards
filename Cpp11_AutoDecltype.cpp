@@ -233,7 +233,7 @@ void f4(T &&param)
     - reference colapsing
     reference collapsing:
             & & -> &
-            & && -> &
+            & && -> & <- lvalue reference for deduction
             && & -> &
             && && -> &&
 
@@ -247,19 +247,19 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeductionUniversalReferences()
     f4(x);   // x is lvalue, T = int&, param = int&                         , pattern matching: int (lvalue) -> T&&
     f4(cx);  // cx is lvalue, T = const int&, param = const int&            , pattern matching: const int (lvalue) -> T&&
     f4(crx); // rx is lvalue, T = const int&, param = const int&            , pattern matching: const int& (lvalue) -> T&&
-    f4(22);  // x is rvalue (no special handling), T = int, param = int&&   , pattern matching: <22> (rvalue) -> T&&
+    f4(22);  // x is rvalue (no special handling), T = int, param = int&&   , pattern matching: <22> int&& (rvalue) -> T&&
 
-    auto &v1 = x;
-    static_assert(std::is_same<decltype(v1), int &>::value); // auto = int
+    auto &&v1 = x;
+    static_assert(std::is_same<decltype(v1), int &>::value); // declared: int&
 
-    auto &v2 = cx;
-    static_assert(std::is_same<decltype(v2), const int &>::value); // auto = const int
+    auto &&v2 = cx;
+    static_assert(std::is_same<decltype(v2), const int &>::value); // declared: const int&
 
-    auto &v3 = crx;
-    static_assert(std::is_same<decltype(v3), const int &>::value); // auto = const int
+    auto &&v3 = crx;
+    static_assert(std::is_same<decltype(v3), const int &>::value); // declared: const int&
 
     auto &&v4 = 22;
-    static_assert(std::is_same<decltype(v4), int &&>::value); // auto = int&&
+    static_assert(std::is_same<decltype(v4), int &&>::value); // declared: int&&
 }
 
 template <typename T>
@@ -267,7 +267,7 @@ void f5(T param){};
 
 void Cpp11_AutoDecltype::auto_TemplateTypeDeductionByValueParameter()
 {
-    // CASE 5: f(T param)
+    // CASE 5: f5(T param)
     int x = 22;
     const int cx = x;
     const int &crx = x;
@@ -401,11 +401,14 @@ void Cpp11_AutoDecltype::decltype_DeductionOfVariable()
 
     const auto &crx = x;
     static_assert(std::is_same<decltype(crx), const int &>::value);
+
+    decltype(crx) new_crx = x;
+    static_assert(std::is_same<decltype(new_crx), const int &>::value);
 }
 /*
     decltype of the expression is more complicated as it can be lvalue or rvalue
     - if it is lvalue -> deduce the type and place lvalue reference on it
-    - if it is rvalue ->
+    - if it is rvalue -> deduce rvalue reference
 */
 void Cpp11_AutoDecltype::decltype_DeductionOfExpressionLvalue()
 {
@@ -437,22 +440,9 @@ decltype(auto) lookupValueAndChange()
     return values[0];
 }
 
-decltype(auto) sensitiveOnImplementationNoParentheses()
-{
-    int ret = 1;
-    return ret; // returns int
-}
-
-decltype(auto) sensitiveOnImplementationWithParentheses()
-{
-    int ret = 1;
-    // return (ret); // returns int& to the local variable !!
-    return 0;
-}
-
 void Cpp11_AutoDecltype::decltype_auto_DeductionOfReturnType()
 {
-    // lookupValue() = 0;
+    //lookupValue() = 0;
     lookupValueAndChange() = 0; // as it returns reference it is ok
 }
 
@@ -469,6 +459,19 @@ void Cpp11_AutoDecltype::auto_RvalueLvalue()
     std::string data{"Some data"};
     wrapFcn(data);
     wrapFcn(std::move(data)); // unconditional cast to the r-value
+}
+
+decltype(auto) sensitiveOnImplementationNoParentheses()
+{
+    int ret = 1;
+    return ret; // returns int
+}
+
+decltype(auto) sensitiveOnImplementationWithParentheses()
+{
+    int ret = 1;
+    // return (ret); // returns int& to the local variable !!
+    return 0;
 }
 
 /*
