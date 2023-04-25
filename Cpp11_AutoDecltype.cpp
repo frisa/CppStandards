@@ -8,10 +8,23 @@
 /*
 
     auto - specifies that the data type is being automaticaly deduced from the initializer
+    ======================================================================================
 
     - C++ 11 for variables, specifies that the type of the variable that is being declared will be automatically deduced from its initializer
+                    int x{0};
+                    auto variable = x;
+
     - C++ 14 for functions, specifies that the return type will be deduced from its return statements
+                    int x;
+                    auto function(){return x;}
+
     - C++ 17 for non-type template parameters, specifies that the type will be deduced from the argument
+                    template<auto n>       
+                    auto function() -> std::pair<decltype(n), decltype(n)>
+                    {
+                        return {n, n};
+                    }
+                    function<123>();
 
     syntax:
     <type-constraint> auto              : type is deduced using the rules for template argument deduction
@@ -107,34 +120,15 @@ namespace
     {
         std::cout << "type of variable: " << typeid(variable_string).name() << std::endl;
     }
-
-    template <typename T>
-    void f1(T &param)
-    {
-        std::cout << "Type is: " << typeid(param).name() << std::endl;
-    };
-
-    template <typename T>
-    void f2(const T &param)
-    {
-        std::cout << "Type is: " << typeid(param).name() << std::endl;
-    };
-
-    template <typename T>
-    void f3(T *param)
-    {
-        std::cout << "Type is: " << typeid(param).name() << std::endl;
-    };
-
 }
 
 /*
     Template Type Deduction:
     in order to instantiate a function template:
-    - every template argument must be knows, but not every template argument has to be specified.
+    - every template argument must be known, but not every template argument has to be specified.
 
     the compiler will deduce the missing template arguments from the function arguments in folowing cases:
-    - function call is attended
+    - function call is attended 
     - when an address of a function template is taken
     - and in some other contexts
 
@@ -165,6 +159,25 @@ namespace
                 3) decltype(auto)
                 4) lambda init capture
 */
+    template <typename T>
+    void f1(T &param)
+    {
+        T local{0};                                                     // What is the type T ?
+        std::cout << "param: " << typeid(param).name() << std::endl;
+        std::cout << "local: " << typeid(local).name() << std::endl;
+    };
+
+    template <typename T>
+    void f2(const T &param)
+    {
+        std::cout << "Type is: " << typeid(param).name() << std::endl;
+    };
+
+    template <typename T>
+    void f3(T *param)
+    {
+        std::cout << "Type is: " << typeid(param).name() << std::endl;
+    };
 
 void Cpp11_AutoDecltype::auto_TemplateTypeDeduction_NormalReferences()
 {
@@ -187,7 +200,7 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeduction_NormalReferences()
     static_assert(std::is_same<decltype(v3), const int &>::value); // auto = const int
 
     // CASE 2: f1(const T& param)
-    f2(x);   // -> T = int, param = const int&                  , pattern matching: const int -> const T&
+    f2(x);   // -> T = int, param = const int&                  , pattern matching: int -> const T&
     f2(cx);  // -> T = int, param = const int&                  , pattern matching: const int -> const T&
     f2(crx); // -> T = int, param = const int&                  , pattern matching: const int& -> const T&
 
@@ -223,7 +236,7 @@ void f4(T &&param)
             & && -> &
             && & -> &
             && && -> &&
-       
+
 */
 void Cpp11_AutoDecltype::auto_TemplateTypeDeductionUniversalReferences()
 {
@@ -277,9 +290,9 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeductionByValueParameter()
     auto &v5 = crx;  // type = const int&
     auto &&v6 = crx; // type = const int& (rx is lvalue)
 }
-
+#if (TRUE)
 /*
-    auto type dedution is same as template type deduction, EXCEPT with braced initializers
+    auto type deduction is same as template type deduction, EXCEPT with braced initializers
     - template type deduciton fails
     - audo deduces std::initializer_list
 */
@@ -377,6 +390,7 @@ void Cpp11_AutoDecltype::auto_ConstTypeDeduction()
     auto auto_variable2{type_variable2};
     static_assert(std::is_same<decltype(auto_variable2), int>::value, "variable does not have expected type");
 }
+#endif
 /*
     decltype returns exactly the declared type of the variable so CVR will keep as deduced type
 */
