@@ -10,9 +10,12 @@
     auto - specifies that the data type is being automaticaly deduced from the initializer
     ======================================================================================
 
+    - C++ 98 for variables declaration, use the automatic storage duration
+                    auto int x = 0;
+
     - C++ 11 for variables, specifies that the type of the variable that is being declared will be automatically deduced from its initializer
                     int x{0};
-                    auto variable = x;
+                    auto variable = x; // similar like var in C#
 
     - C++ 14 for functions, specifies that the return type will be deduced from its return statements
                     int x;
@@ -27,14 +30,13 @@
                     function<123>();
 
     syntax:
-    <type-constraint> auto                  : type is deduced using the rules for template argument deduction
+    <type-constraint> auto                  : type is deduced using the rules for "Template Argument Deduction"
     <type-constraint> decltype(expresion)   : return the type needed for the output of the expleression uchar + uchar = int
     <type-constraint> decltype(auto)        : type is deduced from decltype(expresion) the expression is used as initializer
 
     reference:
         Scott Meyers - Type Deduction and why you care
         Scott Meyers - Effective Modern C++
-
 */
 
 // unnamend namespace for internal linkage
@@ -214,13 +216,16 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeduction_NormalReferences()
     const auto &v6 = crx;
     static_assert(std::is_same<decltype(v6), const int &>::value); // auto = int
 
-    // CASE 3: f(T* param)
+    // CASE 3: f3(T* param)
     const int *pcx = &x;
-    f3(&x);  // -> T = int, param = int*
-    f3(pcx); // -> T = const int, param = const int*
+    f3(&x);  // -> T = int, param = int*                , pattern matching: int* -> T*
+    f3(pcx); // -> T = const int, param = const int*    , pattern matching: const int* -> T*
 
-    const auto *v7 = &x;
-    static_assert(std::is_same<decltype(v7), const int *>::value); // auto = int
+    auto *v7 = &x;
+    static_assert(std::is_same<decltype(v7), int *>::value); // auto = int
+
+    const auto *v8 = pcx;
+    static_assert(std::is_same<decltype(v8), const int *>::value); // auto = int
 }
 
 template <typename T>
