@@ -22,7 +22,7 @@
                     auto function(){return x;}
 
     - C++ 17 for non-type template parameters, specifies that the type will be deduced from the argument
-                    template<auto n>       
+                    template<auto n>
                     auto function() -> std::pair<decltype(n), decltype(n)>
                     {
                         return {n, n};
@@ -131,11 +131,13 @@ namespace
     - every template argument must be known, but not every template argument has to be specified.
 
     the compiler will deduce the missing template arguments from the function arguments in folowing cases:
-    - function call is attended 
+    - function call is attended
     - when an address of a function template is taken
     - and in some other contexts
 
     This mechanism makes it possible to use template operators, since there is no syntax to specify template arguments for an operator
+
+
 */
 
 /*
@@ -162,25 +164,25 @@ namespace
                 3) decltype(auto)
                 4) lambda init capture
 */
-    template <typename T>
-    void f1(T &param)
-    {
-        T local{0};                                                     // What is the type T ?
-        std::cout << "param: " << typeid(param).name() << std::endl;
-        std::cout << "local: " << typeid(local).name() << std::endl;
-    };
+template <typename T>
+void f1(T &param)
+{
+    T local{0}; // What is the type T ?
+    std::cout << "param: " << typeid(param).name() << std::endl;
+    std::cout << "local: " << typeid(local).name() << std::endl;
+};
 
-    template <typename T>
-    void f2(const T &param)
-    {
-        std::cout << "Type is: " << typeid(param).name() << std::endl;
-    };
+template <typename T>
+void f2(const T &param)
+{
+    std::cout << "Type is: " << typeid(param).name() << std::endl;
+};
 
-    template <typename T>
-    void f3(T *param)
-    {
-        std::cout << "Type is: " << typeid(param).name() << std::endl;
-    };
+template <typename T>
+void f3(T *param)
+{
+    std::cout << "Type is: " << typeid(param).name() << std::endl;
+};
 
 void Cpp11_AutoDecltype::auto_TemplateTypeDeduction_NormalReferences()
 {
@@ -191,7 +193,7 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeduction_NormalReferences()
     // CASE 1: f1(T& param)
     f1(x);   // -> T = int , param = int&                       , pattern matching: int -> T&
     f1(cx);  // -> T = const int, param = const int&            , pattern matching: const int -> T&
-    f1(crx); // -> T = const int, param = const int&            , pattten matching: const int& -> T&
+    f1(crx); // -> T = const int, param = const int&            , pattten matching: const int(&) -> T&
 
     auto &v1 = x;
     static_assert(std::is_same<decltype(v1), int &>::value); // auto = int
@@ -205,7 +207,7 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeduction_NormalReferences()
     // CASE 2: f1(const T& param)
     f2(x);   // -> T = int, param = const int&                  , pattern matching: int -> const T&
     f2(cx);  // -> T = int, param = const int&                  , pattern matching: const int -> const T&
-    f2(crx); // -> T = int, param = const int&                  , pattern matching: const int& -> const T&
+    f2(crx); // -> T = int, param = const int&                  , pattern matching: const int -> const T&
 
     const auto &v4 = x;
     static_assert(std::is_same<decltype(v4), const int &>::value); // auto = int
@@ -398,18 +400,18 @@ void Cpp11_AutoDecltype::auto_ConstTypeDeduction()
     static_assert(std::is_same<decltype(auto_variable2), int>::value, "variable does not have expected type");
 }
 #endif
-template<typename T>
+template <typename T>
 T AddTwoOverflow(T x)
 {
     return x + x; // two unsigned chars can produce the int
 }
 
-template<typename T>
-auto AddTwo(T x) -> decltype(x+x)
+template <typename T>
+auto AddTwo(T x) -> decltype(x + x)
 {
     return x + x; // two unsigned chars can produce the int
 }
-const int& someExpression()
+const int &someExpression()
 {
     static int x{0};
     return x;
@@ -440,23 +442,23 @@ void Cpp11_AutoDecltype::decltype_DeductionOfVariable()
     decltype(crx) new_crx = x;
     static_assert(std::is_same<decltype(new_crx), const int &>::value);
 
-    decltype(auto) willBeUchar = AddTwoOverflow(static_cast<unsigned char>(99999));
+    auto willBeUchar = AddTwoOverflow(static_cast<unsigned char>(99999));
     static_assert(std::is_same<decltype(willBeUchar), unsigned char>::value);
 
-    decltype(auto) shallBeInt = AddTwo(static_cast<unsigned char>(99999));
+    auto shallBeInt = AddTwo(static_cast<unsigned char>(99999));
     static_assert(std::is_same<decltype(shallBeInt), int>::value);
 
     auto ret1 = someExpression();
     static_assert(std::is_same<decltype(ret1), int>::value); // this does use the template type deduction
 
     decltype(auto) ret2 = someExpresstionAutoWrapper();
-    static_assert(std::is_same<decltype(ret2), int>::value); // THIS WILL RETURNE WRONG DEDUCED DATA TYPE - perfekt forwarding 
+    static_assert(std::is_same<decltype(ret2), int>::value); // THIS WILL RETURNE WRONG DEDUCED DATA TYPE - perfekt forwarding
 
     decltype(auto) ret3 = someExpresstionDecltypeAutoWrapper();
-    static_assert(std::is_same<decltype(ret3), const int&>::value); // this will return proper data type deduced from the declaration
+    static_assert(std::is_same<decltype(ret3), const int &>::value); // this will return proper data type deduced from the declaration
 
     decltype(auto) ret4 = someExpresstionDecltypeAutoWrapperTrailing();
-    static_assert(std::is_same<decltype(ret4), const int&>::value); // this will return proper data type deduced from the declaration with trailing
+    static_assert(std::is_same<decltype(ret4), const int &>::value); // this will return proper data type deduced from the declaration with trailing
 }
 /*
     decltype of the expression is more complicated as it can be lvalue or rvalue
@@ -495,7 +497,7 @@ decltype(auto) lookupValueAndChange()
 
 void Cpp11_AutoDecltype::decltype_auto_DeductionOfReturnType()
 {
-    //lookupValue() = 0;
+    // lookupValue() = 0;
     lookupValueAndChange() = 0; // as it returns reference it is ok
 }
 
