@@ -497,7 +497,7 @@ decltype(auto) lookupValueAndChange()
 
 void Cpp11_AutoDecltype::decltype_auto_DeductionOfReturnType()
 {
-    // lookupValue() = 0;
+    //lookupValue() = 0;
     lookupValueAndChange() = 0; // as it returns reference it is ok
 }
 
