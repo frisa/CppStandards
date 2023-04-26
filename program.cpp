@@ -2,6 +2,7 @@
 
 #include "Cpp11_AutoDecltype.hpp"
 #include "Cpp11_InitializerList.hpp"
+#include "Cpp11_UniformInitialization.hpp"
 
 int main()
 {
@@ -17,5 +18,8 @@ int main()
 
     std::unique_ptr<Cpp11_InitializerList> cppInitList = std::make_unique<Cpp11_InitializerList>();
     cppInitList->initializerList_SimpleExamples();
+
+    std::unique_ptr<Cpp11_UniformInitialization> cppUniInit = std::make_unique<Cpp11_UniformInitialization>();
+    cppUniInit->uniformInit_SimpleExample();
     return 0;
 }

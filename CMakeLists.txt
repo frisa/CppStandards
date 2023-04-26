@@ -10,7 +10,9 @@ target_sources(myProgram
     PRIVATE
         "Cpp11_AutoDecltype.cpp"
         "Cpp11_InitializerList.cpp"
+        "Cpp11_UniformInitialization.cpp"
     PUBLIC
         "Cpp11_AutoDecltype.hpp"
         "Cpp11_InitializerList.hpp"
+        "Cpp11_UniformInitialization.cpp"
         )
