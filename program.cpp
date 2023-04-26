@@ -1,17 +1,21 @@
 #include <memory>
 
 #include "Cpp11_AutoDecltype.hpp"
+#include "Cpp11_InitializerList.hpp"
 
 int main()
 {
-    std::unique_ptr<Cpp11_AutoDecltype> cpp = std::make_unique<Cpp11_AutoDecltype>();
-    cpp->auto_TemplateTypeDeduction_NormalReferences();
-    cpp->auto_TemplateTypeDeductionUniversalReferences();
-    cpp->auto_TemplateTypeDeductionByValueParameter();
-    cpp->decltype_DeductionOfVariable();
-    cpp->decltype_DeductionOfExpressionLvalue();
-    //cpp->auto_TemplateArgumentDeduction();
-    //cpp->auto_SimpleTypeDeduction();
-    //cpp->auto_ConstTypeDeduction();
+    std::unique_ptr<Cpp11_AutoDecltype> cppAutoDecltype = std::make_unique<Cpp11_AutoDecltype>();
+    cppAutoDecltype->auto_TemplateTypeDeduction_NormalReferences();
+    cppAutoDecltype->auto_TemplateTypeDeductionUniversalReferences();
+    cppAutoDecltype->auto_TemplateTypeDeductionByValueParameter();
+    cppAutoDecltype->decltype_DeductionOfVariable();
+    cppAutoDecltype->decltype_DeductionOfExpressionLvalue();
+    cppAutoDecltype->auto_TemplateArgumentDeduction();
+    cppAutoDecltype->auto_SimpleTypeDeduction();
+    cppAutoDecltype->auto_ConstTypeDeduction();
+
+    std::unique_ptr<Cpp11_InitializerList> cppInitList = std::make_unique<Cpp11_InitializerList>();
+    cppInitList->initializerList_SimpleExamples();
     return 0;
 }

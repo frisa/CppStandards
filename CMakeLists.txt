@@ -9,5 +9,8 @@ set_property(TARGET myProgram PROPERTY CXX_STANDARD_REQUIRED ON)
 target_sources(myProgram
     PRIVATE
         "Cpp11_AutoDecltype.cpp"
+        "Cpp11_InitializerList.cpp"
     PUBLIC
-        "Cpp11_AutoDecltype.hpp")
+        "Cpp11_AutoDecltype.hpp"
+        "Cpp11_InitializerList.hpp"
+        )

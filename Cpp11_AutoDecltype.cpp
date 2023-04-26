@@ -299,7 +299,6 @@ void Cpp11_AutoDecltype::auto_TemplateTypeDeductionByValueParameter()
     auto &v5 = crx;  // type = const int&
     auto &&v6 = crx; // type = const int& (rx is lvalue)
 }
-#if (TRUE)
 /*
     auto type deduction is same as template type deduction, EXCEPT with braced initializers
     - template type deduciton fails
@@ -399,7 +398,7 @@ void Cpp11_AutoDecltype::auto_ConstTypeDeduction()
     auto auto_variable2{type_variable2};
     static_assert(std::is_same<decltype(auto_variable2), int>::value, "variable does not have expected type");
 }
-#endif
+
 template <typename T>
 T AddTwoOverflow(T x)
 {
