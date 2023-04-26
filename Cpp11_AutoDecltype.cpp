@@ -246,7 +246,8 @@ void f4(T &&param)
 */
 void Cpp11_AutoDecltype::auto_TemplateTypeDeductionUniversalReferences()
 {
-    // CASE 4: f(T&& param)
+    // CASE 4: f4(T&& param)
+    // additional rule is the input lvalue or rvalue
     int x = 22;
     const int cx = x;
     const int &crx = x;
@@ -398,6 +399,12 @@ void Cpp11_AutoDecltype::auto_ConstTypeDeduction()
 }
 #endif
 template<typename T>
+T AddTwoOverflow(T x)
+{
+    return x + x; // two unsigned chars can produce the int
+}
+
+template<typename T>
 auto AddTwo(T x) -> decltype(x+x)
 {
     return x + x; // two unsigned chars can produce the int
@@ -407,8 +414,14 @@ const int& someExpression()
     static int x{0};
     return x;
 };
-auto someExpresstionAutoWrapper(){return someExpression();};
-decltype(auto) someExpresstionDecltypeAutoWrapper(){return someExpression();};
+auto someExpresstionAutoWrapper()
+{
+    return someExpression();
+};
+decltype(auto) someExpresstionDecltypeAutoWrapper()
+{
+    return someExpression();
+};
 auto someExpresstionDecltypeAutoWrapperTrailing() -> decltype(auto)
 {
     return someExpression();
@@ -426,6 +439,9 @@ void Cpp11_AutoDecltype::decltype_DeductionOfVariable()
 
     decltype(crx) new_crx = x;
     static_assert(std::is_same<decltype(new_crx), const int &>::value);
+
+    decltype(auto) willBeUchar = AddTwoOverflow(static_cast<unsigned char>(99999));
+    static_assert(std::is_same<decltype(willBeUchar), unsigned char>::value);
 
     decltype(auto) shallBeInt = AddTwo(static_cast<unsigned char>(99999));
     static_assert(std::is_same<decltype(shallBeInt), int>::value);
