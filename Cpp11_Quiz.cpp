@@ -1,5 +1,8 @@
 #include "Cpp11_Quiz.hpp"
 
+#include <iostream>
+#include <type_traits>
+
 size_t get_size_1(int * arr){
     return sizeof(arr);
 }
@@ -61,4 +64,10 @@ void Cpp11_Quiz::quiz_229()
         return a + b;
     };
     std::cout << f(4);
+}
+
+void Cpp11_Quiz::quiz_337()
+{
+    auto a = "some text";
+    std::cout << std::is_same_v<decltype("some text"), decltype(a)>;
 }
