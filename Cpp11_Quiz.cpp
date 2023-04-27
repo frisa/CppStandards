@@ -164,6 +164,15 @@ void Cpp11_Quiz::quiz_239()
     }
 }
 
+void Cpp11_Quiz::quiz_249()
+{
+    int a = '0';
+    char const& b = a;
+    std::cout << b;
+    a++;
+    std::cout << b;
+}
+
 class C
 {
 public:

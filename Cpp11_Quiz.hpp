@@ -11,6 +11,7 @@ public:
     void quiz_229();
     void quiz_235();
     void quiz_239();
+    void quiz_249();
     void quiz_281();
     void quiz_312();
     void quiz_337();
