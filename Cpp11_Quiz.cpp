@@ -91,6 +91,17 @@ void Cpp11_Quiz::quiz_193()
     std::cout << a2[0];
 }
 
+void Cpp11_Quiz::quiz_206()
+{
+    int n = sizeof(0)["abcdefghij"];
+    std::cout << n;
+
+    /* the explenation is following:
+    We can see that (0)["abcdefghij"] is identical to ("abcdefghij")[0] from
+    reslt is sizeof('a')
+    */
+}
+
 int a = 1;
 void Cpp11_Quiz::quiz_229()
 {
@@ -103,6 +114,25 @@ void Cpp11_Quiz::quiz_229()
         return a + b;
     };
     std::cout << f(4);
+}
+
+class C2{
+    public:
+    C2() = default;
+    C2(const C2& other)
+    {
+        std::cout << 1;
+    }
+};
+
+void f(std::initializer_list<C2> init_list){}
+void Cpp11_Quiz::quiz_235()
+{
+    C2 c;
+    std::initializer_list<C2> i{c};
+    f(i);
+    f(i);
+    // copy of the initializer list does not lead to the copy of the underlying elements but refers to the initialized array
 }
 
 void Cpp11_Quiz::quiz_239()
