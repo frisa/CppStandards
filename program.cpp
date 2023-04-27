@@ -5,9 +5,11 @@
 #include "Cpp11_UniformInitialization.hpp"
 #include "Cpp11_VariadicTemplates.hpp"
 #include "Cpp11_Lambdas.hpp"
+#include "Cpp11_Quiz.hpp"
 
 int main()
 {
+    /*
     std::unique_ptr<Cpp11_AutoDecltype> cppAutoDecltype = std::make_unique<Cpp11_AutoDecltype>();
     cppAutoDecltype->auto_TemplateTypeDeduction_NormalReferences();
     cppAutoDecltype->auto_TemplateTypeDeductionUniversalReferences();
@@ -30,6 +32,9 @@ int main()
 
     std::unique_ptr<Cpp11_VariadicTemplate> cppVariadicTemplates = std::unique_ptr<Cpp11_VariadicTemplate>();
     cppVariadicTemplates->variadicTemplate_SimpleExmple();
-    return 0;
+    */
 
+    std::unique_ptr<Cpp11_Quiz> cppQuiz = std::make_unique<Cpp11_Quiz>();
+    cppQuiz->quiz_140();
+    return 0;
 }
