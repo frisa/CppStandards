@@ -41,6 +41,9 @@ int main()
     //cppQuiz->quiz_337();
     //cppQuiz->quiz_001();
     //cppQuiz->quiz_239();
-    cppQuiz->quiz_281();
+    //cppQuiz->quiz_281();
+    //cppQuiz->quiz_339();
+    //cppQuiz->quiz_193();
+    cppQuiz->quiz_312();
     return 0;
 }
