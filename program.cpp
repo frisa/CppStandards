@@ -3,6 +3,7 @@
 #include "Cpp11_AutoDecltype.hpp"
 #include "Cpp11_InitializerList.hpp"
 #include "Cpp11_UniformInitialization.hpp"
+#include "Cpp11_Lambdas.hpp"
 
 int main()
 {
@@ -21,5 +22,10 @@ int main()
 
     std::unique_ptr<Cpp11_UniformInitialization> cppUniInit = std::make_unique<Cpp11_UniformInitialization>();
     cppUniInit->uniformInit_SimpleExample();
+
+    std::unique_ptr<Cpp11_Lambdas> cppLambdas = std::make_unique<Cpp11_Lambdas>();
+    cppLambdas->lambdas_SimpleExample();
+    cppLambdas->lambdas_UseInFunction();
     return 0;
+
 }

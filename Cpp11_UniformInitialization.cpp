@@ -1,6 +1,8 @@
 #include "Cpp11_UniformInitialization.hpp"
 #include <iostream>
 #include <initializer_list>
+#include <memory>
+#include <vector>
 
 struct SomeStructure{
     int m_id;
@@ -29,8 +31,14 @@ void Cpp11_UniformInitialization::uniformInit_SimpleExample()
 {
     SomeStructure somStr{1, "SomeName"};
     std::cout << "name id: " << somStr.m_name << std::endl;
-    
-    // example of the order
+    std::initializer_list<int> values{1,2,3};
+    std::unique_ptr<SomeOrderExample> someOrd = std::make_unique<SomeOrderExample>(values);
 
+    int * pi = nullptr; // just to put it somwhere
 
+    // just to put it somwhere
+    std::vector vct{1,2,3};
+    for(auto item:vct){
+        std::cout << "item:" << item << std::endl;
+    }
 };
