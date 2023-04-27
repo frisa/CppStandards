@@ -3,6 +3,7 @@
 #include "Cpp11_AutoDecltype.hpp"
 #include "Cpp11_InitializerList.hpp"
 #include "Cpp11_UniformInitialization.hpp"
+#include "Cpp11_VariadicTemplates.hpp"
 #include "Cpp11_Lambdas.hpp"
 
 int main()
@@ -26,6 +27,9 @@ int main()
     std::unique_ptr<Cpp11_Lambdas> cppLambdas = std::make_unique<Cpp11_Lambdas>();
     cppLambdas->lambdas_SimpleExample();
     cppLambdas->lambdas_UseInFunction();
+
+    std::unique_ptr<Cpp11_VariadicTemplate> cppVariadicTemplates = std::unique_ptr<Cpp11_VariadicTemplate>();
+    cppVariadicTemplates->variadicTemplate_SimpleExmple();
     return 0;
 
 }

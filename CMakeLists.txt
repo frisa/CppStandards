@@ -12,9 +12,11 @@ target_sources(myProgram
         "Cpp11_InitializerList.cpp"
         "Cpp11_UniformInitialization.cpp"
         "Cpp11_Lambdas.cpp"
+        "Cpp11_VariadicTemplates.cpp"
     PUBLIC
         "Cpp11_AutoDecltype.hpp"
         "Cpp11_InitializerList.hpp"
-        "Cpp11_UniformInitialization.cpp"
+        "Cpp11_UniformInitialization.hpp"
         "Cpp11_Lambdas.hpp"
+        "Cpp11_VariadicTemplates.hpp"
         )
