@@ -7,6 +7,7 @@
 #include "Cpp11_Lambdas.hpp"
 #include "Cpp11_Quiz.hpp"
 #include "Cpp14_VariableTemplates.hpp"
+#include "Cpp14_GenericLambdas.hpp"
 
 int main()
 {
@@ -38,6 +39,9 @@ int main()
     std::unique_ptr<Cpp14_VariableTemplates> cppVarTemplates = std::make_unique<Cpp14_VariableTemplates>();
     cppVarTemplates->variableTemplates_SimpleExample();
 
+    std::unique_ptr<Cpp14_GenericLambdas> cppGenericLambdas = std::make_unique<Cpp14_GenericLambdas>();
+    cppGenericLambdas->genericLambdas_SimpleExample();
+    
     std::unique_ptr<Cpp11_Quiz> cppQuiz = std::make_unique<Cpp11_Quiz>();
     //cppQuiz->quiz_140();
     //cppQuiz->quiz_105();
