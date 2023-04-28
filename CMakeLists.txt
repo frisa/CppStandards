@@ -14,6 +14,7 @@ target_sources(myProgram
         "Cpp11_Lambdas.cpp"
         "Cpp11_VariadicTemplates.cpp"
         "Cpp11_Quiz.cpp"
+        "Cpp14_VariableTemplates.cpp"
     PUBLIC
         "Cpp11_AutoDecltype.hpp"
         "Cpp11_InitializerList.hpp"
@@ -21,4 +22,5 @@ target_sources(myProgram
         "Cpp11_Lambdas.hpp"
         "Cpp11_VariadicTemplates.hpp"
         "Cpp11_Quiz.cpp"
+        "Cpp14_VariableTemplates.hpp"
         )
