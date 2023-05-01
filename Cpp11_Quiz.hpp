@@ -16,4 +16,5 @@ public:
     void quiz_312();
     void quiz_337();
     void quiz_339();
+    void quiz_350();
 };

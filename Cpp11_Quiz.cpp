@@ -4,6 +4,7 @@
 #include <type_traits>
 #include <stdexcept>
 #include <future>
+#include <functional>
 
 size_t get_size_1(int *arr)
 {
@@ -257,4 +258,38 @@ void Cpp11_Quiz::quiz_339()
     p.set_value(1);
     std::cout << f.get(); // you can only get value once from the future
                           // std::cout << f.get(); this would cause exception
+}
+
+class Q{
+    int v{0};
+    public:
+        Q(Q&&){
+            std::cout<< "M";
+        }
+        Q(const Q&){
+            std::cout<< "C";
+        }
+        Q(){
+            std::cout<< "D";
+        }
+        void change(){
+            ++v;
+        }
+        void func(){
+            std::cout<<v;
+        }
+};
+
+void takeQfunc(std::function<void(Q)> qfunc){
+    Q q;
+    q.func();
+    qfunc(q);
+    q.func();
+}
+
+void Cpp11_Quiz::quiz_350()
+{
+    takeQfunc([](Q&& q){
+        q.change();
+    });
 }
