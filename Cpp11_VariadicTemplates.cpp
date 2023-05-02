@@ -43,6 +43,7 @@ std::vector<std::string> to_string(const P1 &p1, const Param& ...param){
     std::vector<std::string> s;
     s.push_back(to_string_impl(p1));
     // call the its function and add them to the remainder
+    // at the end there will be done call with zero parameter so the compiler had warning
     const auto remainder = to_string(param...);
     s.insert(s.end(), remainder.begin(), remainder.end());
     return s;
