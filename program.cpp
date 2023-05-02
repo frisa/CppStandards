@@ -31,11 +31,11 @@ int main()
 
     std::unique_ptr<Cpp11_Lambdas> cppLambdas = std::make_unique<Cpp11_Lambdas>();
     cppLambdas->lambdas_SimpleExample();
-    cppLambdas->lambdas_UseInFunction();
+    cppLambdas->lambdas_UseInFunction();*/
 
     std::unique_ptr<Cpp11_VariadicTemplate> cppVariadicTemplates = std::unique_ptr<Cpp11_VariadicTemplate>();
     cppVariadicTemplates->variadicTemplate_SimpleExmple();
-    */
+    
 
     std::unique_ptr<Cpp14_VariableTemplates> cppVarTemplates = std::make_unique<Cpp14_VariableTemplates>();
     cppVarTemplates->variableTemplates_SimpleExample();
@@ -60,6 +60,6 @@ int main()
     //cppQuiz->quiz_206();
     //cppQuiz->quiz_235();
     //cppQuiz->quiz_249();
-    cppQuiz->quiz_350();
+    //cppQuiz->quiz_350();
     return 0;
 }
