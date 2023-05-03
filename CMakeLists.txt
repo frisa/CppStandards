@@ -19,6 +19,7 @@ target_sources(myProgram
         "Cpp14_IntegerLiteral.cpp"
         "CppXX_ComprehensivQuiz.cpp"
         "Cpp11_AlignmentReq.cpp"
+        "Cpp11_GeneralizedUnions.cpp"
     PUBLIC
         "Cpp11_AutoDecltype.hpp"
         "Cpp11_InitializerList.hpp"
@@ -31,4 +32,5 @@ target_sources(myProgram
         "Cpp14_IntegerLiteral.hpp"
         "CppXX_ComprehensivQuiz.hpp"
         "Cpp11_AlignmentReq.hpp"
+        "Cpp11_GeneratlizedUnions.hpp"
         )

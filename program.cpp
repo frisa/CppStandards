@@ -11,6 +11,7 @@
 #include "Cpp14_IntegerLiteral.hpp"
 #include "CppXX_ComprehensivQuiz.hpp"
 #include "Cpp11_AlignmentReq.hpp"
+#include "Cpp11_GeneralizedUnions.hpp"
 
 int main()
 {
@@ -70,5 +71,7 @@ int main()
     std::unique_ptr<Cpp11_AlignmentReq> cppAligReq = std::make_unique<Cpp11_AlignmentReq>();
     cppAligReq->alignReq_SimpleExample();
 
+    std::unique_ptr<Cpp11_GeneralizedUnions> cppGenUni =  std::make_unique<Cpp11_GeneralizedUnions>();
+    cppGenUni->genUni_simpleExample();
     return 0;
 }
