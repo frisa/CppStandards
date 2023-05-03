@@ -18,6 +18,7 @@ target_sources(myProgram
         "Cpp14_GenericLambdas.cpp"
         "Cpp14_IntegerLiteral.cpp"
         "CppXX_ComprehensivQuiz.cpp"
+        "Cpp11_AlignmentReq.cpp"
     PUBLIC
         "Cpp11_AutoDecltype.hpp"
         "Cpp11_InitializerList.hpp"
@@ -29,4 +30,5 @@ target_sources(myProgram
         "Cpp14_GenericLambdas.hpp"
         "Cpp14_IntegerLiteral.hpp"
         "CppXX_ComprehensivQuiz.hpp"
+        "Cpp11_AlignmentReq.hpp"
         )

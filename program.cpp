@@ -10,6 +10,7 @@
 #include "Cpp14_GenericLambdas.hpp"
 #include "Cpp14_IntegerLiteral.hpp"
 #include "CppXX_ComprehensivQuiz.hpp"
+#include "Cpp11_AlignmentReq.hpp"
 
 int main()
 {
@@ -65,6 +66,9 @@ int main()
 
     std::unique_ptr<ComprehensiveQuiz> cp = std::make_unique<ComprehensiveQuiz>();
     cp->Question_01();
+
+    std::unique_ptr<Cpp11_AlignmentReq> cppAligReq = std::make_unique<Cpp11_AlignmentReq>();
+    cppAligReq->alignReq_SimpleExample();
 
     return 0;
 }
