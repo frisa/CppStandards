@@ -9,6 +9,7 @@
 #include "Cpp14_VariableTemplates.hpp"
 #include "Cpp14_GenericLambdas.hpp"
 #include "Cpp14_IntegerLiteral.hpp"
+#include "CppXX_ComprehensivQuiz.hpp"
 
 int main()
 {
@@ -61,5 +62,9 @@ int main()
     //cppQuiz->quiz_235();
     //cppQuiz->quiz_249();
     //cppQuiz->quiz_350();
+
+    std::unique_ptr<ComprehensiveQuiz> cp = std::make_unique<ComprehensiveQuiz>();
+    cp->Question_01();
+
     return 0;
 }
