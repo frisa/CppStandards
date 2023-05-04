@@ -32,5 +32,5 @@ target_sources(myProgram
         "Cpp14_IntegerLiteral.hpp"
         "CppXX_ComprehensivQuiz.hpp"
         "Cpp11_AlignmentReq.hpp"
-        "Cpp11_GeneratlizedUnions.hpp"
+        "Cpp11_GeneralizedUnions.hpp"
         )
