@@ -7,15 +7,9 @@
 #include "Cpp11_Lambdas.hpp"
 #include "Cpp11_Quiz.hpp"
 #include "Cpp14_VariableTemplates.hpp"
-<<<<<<< HEAD
-#include "Cpp14_GenericLambdas.hpp"
 #include "Cpp14_IntegerLiteral.hpp"
-#include "CppXX_ComprehensivQuiz.hpp"
-#include "Cpp11_AlignmentReq.hpp"
-#include "Cpp11_GeneralizedUnions.hpp"
-=======
+#include "Cpp14_GenericLambdas.hpp"
 #include "Cpp17_NesteadNamespaces.hpp"
->>>>>>> effb500 (Added some simple stuff from C++ 17 and some more design paterns)
 
 int main()
 {
@@ -66,23 +60,9 @@ int main()
     //cppQuiz->quiz_312();
     //cppQuiz->quiz_206();
     //cppQuiz->quiz_235();
-<<<<<<< HEAD
-    //cppQuiz->quiz_249();
-    //cppQuiz->quiz_350();
-
-    std::unique_ptr<ComprehensiveQuiz> cp = std::make_unique<ComprehensiveQuiz>();
-    cp->Question_01();
-
-    std::unique_ptr<Cpp11_AlignmentReq> cppAligReq = std::make_unique<Cpp11_AlignmentReq>();
-    cppAligReq->alignReq_SimpleExample();
-
-    std::unique_ptr<Cpp11_GeneralizedUnions> cppGenUni =  std::make_unique<Cpp11_GeneralizedUnions>();
-    cppGenUni->genUni_simpleExample();
-=======
     cppQuiz->quiz_249();
 
     std::unique_ptr<Cpp17_NesteadNamespaces> nestName = std::make_unique<Cpp17_NesteadNamespaces>();
     nestName->nestName_SimpleExample();
->>>>>>> effb500 (Added some simple stuff from C++ 17 and some more design paterns)
     return 0;
 }
