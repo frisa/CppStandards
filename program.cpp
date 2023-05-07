@@ -10,6 +10,7 @@
 #include "Cpp14_IntegerLiteral.hpp"
 #include "Cpp14_GenericLambdas.hpp"
 #include "Cpp17_NesteadNamespaces.hpp"
+#include "Cpp17_VariableDeclarationIfSwitch.hpp"
 
 int main()
 {
@@ -64,5 +65,8 @@ int main()
 
     std::unique_ptr<Cpp17_NesteadNamespaces> nestName = std::make_unique<Cpp17_NesteadNamespaces>();
     nestName->nestName_SimpleExample();
+
+    std::unique_ptr<Cpp17_VariableDeclarationIfSwitch> varDecl = std::make_unique<Cpp17_VariableDeclarationIfSwitch>();
+    varDecl->varDecl_SimpleExample();
     return 0;
 }

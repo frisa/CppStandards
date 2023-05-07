@@ -21,6 +21,7 @@ target_sources(myProgram
         "Cpp11_AlignmentReq.cpp"
         "Cpp11_GeneralizedUnions.cpp"
         "Cpp17_NesteadNamespaces.cpp"
+        "Cpp17_VariableDeclarationIfSwitch.cpp"
     PUBLIC
         "Cpp11_AutoDecltype.hpp"
         "Cpp11_InitializerList.hpp"
@@ -35,4 +36,5 @@ target_sources(myProgram
         "Cpp11_AlignmentReq.hpp"
         "Cpp11_GeneralizedUnions.hpp"
         "Cpp17_NesteadNamespaces.hpp"
+        "Cpp17_VariableDeclarationIfSwitch.hpp"
         )
