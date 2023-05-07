@@ -15,11 +15,15 @@ target_sources(myProgram
         "Cpp11_VariadicTemplates.cpp"
         "Cpp11_Quiz.cpp"
         "Cpp14_VariableTemplates.cpp"
+<<<<<<< HEAD
         "Cpp14_GenericLambdas.cpp"
         "Cpp14_IntegerLiteral.cpp"
         "CppXX_ComprehensivQuiz.cpp"
         "Cpp11_AlignmentReq.cpp"
         "Cpp11_GeneralizedUnions.cpp"
+=======
+        "Cpp17_NesteadNamespaces.cpp"
+>>>>>>> effb500 (Added some simple stuff from C++ 17 and some more design paterns)
     PUBLIC
         "Cpp11_AutoDecltype.hpp"
         "Cpp11_InitializerList.hpp"
@@ -28,9 +32,13 @@ target_sources(myProgram
         "Cpp11_VariadicTemplates.hpp"
         "Cpp11_Quiz.cpp"
         "Cpp14_VariableTemplates.hpp"
+<<<<<<< HEAD
         "Cpp14_GenericLambdas.hpp"
         "Cpp14_IntegerLiteral.hpp"
         "CppXX_ComprehensivQuiz.hpp"
         "Cpp11_AlignmentReq.hpp"
         "Cpp11_GeneralizedUnions.hpp"
+=======
+        "Cpp17_NesteadNamespaces.hpp"
+>>>>>>> effb500 (Added some simple stuff from C++ 17 and some more design paterns)
         )
