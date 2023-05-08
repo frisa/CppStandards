@@ -7,11 +7,13 @@
 #include "Cpp11_Lambdas.hpp"
 #include "Cpp11_Quiz.hpp"
 #include "Cpp14_VariableTemplates.hpp"
-#include "Cpp14_GenericLambdas.hpp"
 #include "Cpp14_IntegerLiteral.hpp"
 #include "CppXX_ComprehensivQuiz.hpp"
 #include "Cpp11_AlignmentReq.hpp"
 #include "Cpp11_GeneralizedUnions.hpp"
+#include "Cpp14_GenericLambdas.hpp"
+#include "Cpp17_NesteadNamespaces.hpp"
+#include "Cpp17_VariableDeclarationIfSwitch.hpp"
 #include "PLAYGROUND.hpp"
 
 int main()
@@ -63,11 +65,10 @@ int main()
     //cppQuiz->quiz_312();
     //cppQuiz->quiz_206();
     //cppQuiz->quiz_235();
-    //cppQuiz->quiz_249();
-    //cppQuiz->quiz_350();
+    cppQuiz->quiz_249();
 
-    std::unique_ptr<ComprehensiveQuiz> cp = std::make_unique<ComprehensiveQuiz>();
-    cp->Question_01();
+    std::unique_ptr<Cpp17_NesteadNamespaces> nestName = std::make_unique<Cpp17_NesteadNamespaces>();
+    nestName->nestName_SimpleExample();
 
     std::unique_ptr<Cpp11_AlignmentReq> cppAligReq = std::make_unique<Cpp11_AlignmentReq>();
     cppAligReq->alignReq_SimpleExample();

@@ -10,7 +10,7 @@ struct SomeStructure{
 };
 
 struct SomeOrderExample{
-    int m_value;                // 1st choice
+    int m_value;                // 3st choice
     SomeOrderExample(int value){ // 2nd choice
         m_value = value;
     } 
