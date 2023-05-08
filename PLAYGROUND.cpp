@@ -11,21 +11,40 @@ namespace playground
         {
             std::cout << "call A" << std::endl;
         }
+        virtual void fcnOver1() = 0;
+
+        virtual void fcnOver2()
+        {
+            std::cout << "call fcnA2\n";
+        }
     };
 
-    struct B : virtual A
+    struct B : A
     {
         B()
         {
             std::cout << "call B" << std::endl;
         }
+        void fcnOver1() override
+        {
+            std::cout << "call fcnB1\n";
+        }
+        void fcnOver2() override
+        {
+            std::cout << "call fcnB2\n";
+        }
+
     };
 
-    struct C : virtual A
+    struct C : A
     {
         C()
         {
             std::cout << "call C" << std::endl;
+        }
+        void fcnOver1() override
+        {
+            std::cout << "call fcnC1\n";
         }
     };
 
@@ -35,12 +54,28 @@ namespace playground
         {
             std::cout << "call D" << std::endl;
         }
+        void fcnOver1() override
+        {
+            std::cout << "call fcnD1\n";
+        }
     };
 }
 
+using namespace playground;
+
 void Playground::run()
 {
-    playground::D d;
-    d.variable = 1;
+    A* pa =  new B();
+
+
+    pa->fcnOver1();
+    pa->fcnOver2();
+    pa->A::fcnOver2();
+    void (**vtable)() = * (void (***)())pa;
+
+    D* pd = new D();
+
+    delete pa;
+    delete pd;
     // A& a = d; this would cause the compiler error
 }
