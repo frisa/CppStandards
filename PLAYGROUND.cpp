@@ -2,51 +2,45 @@
 #include <iostream>
 
 // exmample for the diamond problem
-
-class A
+namespace playground
 {
-protected:
-    int _a;
-    A(){
-        _a = 0;
-    }
-};
-
-class B : virtual public A
-{
-    int _b;
-
-public:
-    B() : _b{2}
+    struct A
     {
-        _a = 1;
-    }
-};
+        int variable;
+        A()
+        {
+            std::cout << "call A" << std::endl;
+        }
+    };
 
-class C : virtual public A
-{
-    int _c;
-
-public:
-    C() : _c{3}
+    struct B : virtual A
     {
-        _a = 2;
-    }
-};
+        B()
+        {
+            std::cout << "call B" << std::endl;
+        }
+    };
 
-class D : public B, public C
-{
-public:
-    void print()
+    struct C : virtual A
     {
-        std::cout << "B::_a" << B::_a << std::endl;
-        std::cout << "C::_a:" << C::_a << std::endl;
-    }
-};
+        C()
+        {
+            std::cout << "call C" << std::endl;
+        }
+    };
+
+    struct D : B, C
+    {
+        D()
+        {
+            std::cout << "call D" << std::endl;
+        }
+    };
+}
 
 void Playground::run()
 {
-    std::cout << "This is the playground for testing stuff\n";
-    D d;
-    d.print();
+    playground::D d;
+    d.variable = 1;
+    // A& a = d; this would cause the compiler error
 }
