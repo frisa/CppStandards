@@ -12,6 +12,7 @@
 #include "CppXX_ComprehensivQuiz.hpp"
 #include "Cpp11_AlignmentReq.hpp"
 #include "Cpp11_GeneralizedUnions.hpp"
+#include "PLAYGROUND.hpp"
 
 int main()
 {
@@ -34,7 +35,7 @@ int main()
 
     std::unique_ptr<Cpp11_Lambdas> cppLambdas = std::make_unique<Cpp11_Lambdas>();
     cppLambdas->lambdas_SimpleExample();
-    cppLambdas->lambdas_UseInFunction();*/
+    cppLambdas->lambdas_UseInFunction();
 
     std::unique_ptr<Cpp11_VariadicTemplate> cppVariadicTemplates = std::unique_ptr<Cpp11_VariadicTemplate>();
     cppVariadicTemplates->variadicTemplate_SimpleExmple();
@@ -72,6 +73,9 @@ int main()
     cppAligReq->alignReq_SimpleExample();
 
     std::unique_ptr<Cpp11_GeneralizedUnions> cppGenUni =  std::make_unique<Cpp11_GeneralizedUnions>();
-    cppGenUni->genUni_simpleExample();
+    cppGenUni->genUni_simpleExample(); */
+
+    std::shared_ptr<Playground> play = std::make_unique<Playground>();
+    play->run();
     return 0;
 }

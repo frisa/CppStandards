@@ -20,6 +20,7 @@ target_sources(myProgram
         "CppXX_ComprehensivQuiz.cpp"
         "Cpp11_AlignmentReq.cpp"
         "Cpp11_GeneralizedUnions.cpp"
+        "PLAYGROUND.cpp"
     PUBLIC
         "Cpp11_AutoDecltype.hpp"
         "Cpp11_InitializerList.hpp"
@@ -33,4 +34,5 @@ target_sources(myProgram
         "CppXX_ComprehensivQuiz.hpp"
         "Cpp11_AlignmentReq.hpp"
         "Cpp11_GeneralizedUnions.hpp"
+        "PLAYGROUND.hpp"
         )
