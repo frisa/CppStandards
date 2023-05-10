@@ -33,7 +33,6 @@ namespace playground
         {
             std::cout << "call fcnB2\n";
         }
-
     };
 
     struct C : A
@@ -59,19 +58,81 @@ namespace playground
             std::cout << "call fcnD1\n";
         }
     };
+}  // namespace playground
+
+void SetValue(int& value)
+{
+    std::cout << "lvalue overloaded function is called\n";
+}
+void SetValue(int&& value)
+{
+    std::cout << "rvalue overloaded fucntion is called\n";
 }
 
 using namespace playground;
 
+class Entity
+{
+private:
+    std::string m_name;
+    int m_score;
+
+public:
+    Entity()
+        : m_score(0), m_name("somethink")
+    {
+    }
+    Entity(const std::string& value)
+        : m_name(value)
+    {
+    }
+};
+
+class Atom
+{
+public:
+    Atom(const std::string& value)
+    {
+        std::cout << "Atom constructor" << value << std::endl;
+    }
+};
+
+class Try
+{
+    int m_var1;
+    int m_var2;
+    Atom m_atom;
+
+public:
+    Try(const std::string& value)
+        : m_atom{ value }, m_var1{ 1 }, m_var2{ 2 }
+    {
+        std::cout << "Try constructor called" << std::endl;
+    }
+    void* operator new(size_t sz)
+    {
+        std::cout << "size: " << sz << " size of Try:" << sizeof(Try) << std::endl;
+        return (Try*)malloc(sz);
+    }
+};
+
 void Playground::run()
 {
-    A* pa =  new B();
+    A* pa = new B();
+    Try tr = Try("Hello");
+    Try* ptr = new Try("somethink");
 
+    int&& rvalue = 10;
+    int value = 10;
+    int& lvalue = value;
 
+    SetValue(std::move(rvalue));
+    SetValue(lvalue);
+    SetValue(10);
     pa->fcnOver1();
     pa->fcnOver2();
     pa->A::fcnOver2();
-    void (**vtable)() = * (void (***)())pa;
+    void (**vtable)() = *(void (***)())pa;
 
     D* pd = new D();
 
