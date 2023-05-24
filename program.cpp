@@ -2,6 +2,7 @@
 
 #include "Cpp11_AutoDecltype.hpp"
 #include "Cpp11_DefaultedDeletestFunctions.hpp"
+#include "Cpp11_DeclvalDecltype.hpp"
 #include "Cpp11_InitializerList.hpp"
 #include "Cpp11_UniformInitialization.hpp"
 #include "Cpp11_VariadicTemplates.hpp"
@@ -76,6 +77,9 @@ int main()
 
     std::unique_ptr<Cpp11_GeneralizedUnions> cppGenUni =  std::make_unique<Cpp11_GeneralizedUnions>();
     cppGenUni->genUni_simpleExample(); */
+
+    std::unique_ptr<Cpp11_DeclvalDecltype> declvalEx = std::make_unique<Cpp11_DeclvalDecltype>();
+    declvalEx->simpleExample();
 
     std::shared_ptr<Playground> play = std::make_unique<Playground>();
     play->run();

@@ -23,6 +23,7 @@ target_sources(myProgram
         "PLAYGROUND.cpp"
         "Cpp17_NesteadNamespaces.cpp"
         "Cpp17_VariableDeclarationIfSwitch.cpp"
+        "Cpp11_DeclvalDecltype.cpp"
     PUBLIC
         "Cpp11_AutoDecltype.hpp"
         "Cpp11_InitializerList.hpp"
@@ -39,4 +40,5 @@ target_sources(myProgram
         "PLAYGROUND.hpp"
         "Cpp17_NesteadNamespaces.hpp"
         "Cpp17_VariableDeclarationIfSwitch.hpp"
+        "Cpp11_DeclvalDecltype.hpp"
         )
