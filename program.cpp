@@ -1,6 +1,7 @@
 #include <memory>
 
 #include "Cpp11_AutoDecltype.hpp"
+#include "Cpp11_DefaultedDeletestFunctions.hpp"
 #include "Cpp11_InitializerList.hpp"
 #include "Cpp11_UniformInitialization.hpp"
 #include "Cpp11_VariadicTemplates.hpp"

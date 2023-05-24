@@ -122,6 +122,19 @@ void Playground::run()
     Try tr = Try("Hello");
     Try* ptr = new Try("somethink");
 
+    for (unsigned int idx{}; idx<32; idx++)
+    {
+        int input{1};
+        int value = (input << idx);
+        std::cout << "value: " << value << std::endl;
+
+        const char reg = 0x10; // 0x0000 0000
+        const char regSh = reg << 1;
+
+        const unsigned char c = ~0x00;
+        const unsigned char res = 0x11 ^ 0x21;
+    }
+
     int&& rvalue = 10;
     int value = 10;
     int& lvalue = value;
