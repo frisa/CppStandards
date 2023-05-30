@@ -24,7 +24,7 @@ auto create2(bool b)
 
 auto create3(bool b)
 {
-    static std::string value = "Godzilla";
+    static std::string value = "Some String";
     return b ? std::optional<std::reference_wrapper<std::string>>{ value }
              : std::nullopt;
 }
@@ -34,10 +34,10 @@ void UseOptional::run()
     std::cout << "This is not failing string factory: " << create(true).value_or("Default value by fail") << "\n";
     std::cout << "This is failing string factory: " << create(false).value_or("Default value by fail") << "\n";
 
-    auto ret = create2(false);
+    auto ret = create2(true);
     if (ret)
     {
-        std::cout << "This is failing factory with auto used in condition\n";
+        std::cout << "This is failing factory with auto used in condition" << ret.value() <<"\n";
     }
     else
     {
