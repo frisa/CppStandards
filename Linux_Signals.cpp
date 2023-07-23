@@ -18,7 +18,10 @@ void Linux_Signals::simpleExample()
 {
     std::cout << "starting the application\n";
     signal(SIGINT, sig_int);
-    signal(SIGTERM, sig_term);
+
+    struct sigaction sa;
+    sa.sa_handler = sig_term;
+    sigaction(SIGTERM, &sa, NULL);
     while (1)
     {
         printf("running\n");
