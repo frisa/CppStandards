@@ -16,13 +16,10 @@
 #include "Cpp14_GenericLambdas.hpp"
 #include "Cpp17_NesteadNamespaces.hpp"
 #include "Cpp17_VariableDeclarationIfSwitch.hpp"
-<<<<<<< HEAD
 #include "Linux_Fork.hpp"
 #include "Linux_Signals.hpp"
-=======
 #include "Cpp17_Optional.hpp"
 #include "Cpp_XX_ClmPlayground.hpp"
->>>>>>> main
 #include "PLAYGROUND.hpp"
 
 int main()
@@ -90,16 +87,13 @@ int main()
 
     //std::shared_ptr<Playground> play = std::make_unique<Playground>();
     //play->run();
-<<<<<<< HEAD
     //Linux_Fork::SimpleExample();
     Linux_Signals::simpleExample();
-=======
-
+/*
     std::unique_ptr<ClmPlayground> clm = std::make_unique<ClmPlayground>();
     clm->run();
 
     std::unique_ptr<UseOptional> opt = std::make_unique<UseOptional>();
-    opt->run();
->>>>>>> main
+    opt->run();*/
     return 0;
 }
