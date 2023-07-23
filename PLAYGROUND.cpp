@@ -149,7 +149,7 @@ void Playground::run()
 
     D* pd = new D();
 
-    delete pa;
+
     delete pd;
     // A& a = d; this would cause the compiler error
 }

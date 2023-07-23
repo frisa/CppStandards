@@ -24,6 +24,8 @@ target_sources(myProgram
         "Cpp17_NesteadNamespaces.cpp"
         "Cpp17_VariableDeclarationIfSwitch.cpp"
         "Cpp11_DeclvalDecltype.cpp"
+        "Linux_Fork.cpp"
+        "Linux_Signals.cpp"
     PUBLIC
         "Cpp11_AutoDecltype.hpp"
         "Cpp11_InitializerList.hpp"
@@ -41,4 +43,6 @@ target_sources(myProgram
         "Cpp17_NesteadNamespaces.hpp"
         "Cpp17_VariableDeclarationIfSwitch.hpp"
         "Cpp11_DeclvalDecltype.hpp"
+        "Linux_Fork.hpp"
+        "Linux_Signals.hpp"
         )

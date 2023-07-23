@@ -16,6 +16,8 @@
 #include "Cpp14_GenericLambdas.hpp"
 #include "Cpp17_NesteadNamespaces.hpp"
 #include "Cpp17_VariableDeclarationIfSwitch.hpp"
+#include "Linux_Fork.hpp"
+#include "Linux_Signals.hpp"
 #include "PLAYGROUND.hpp"
 
 int main()
@@ -78,10 +80,12 @@ int main()
     std::unique_ptr<Cpp11_GeneralizedUnions> cppGenUni =  std::make_unique<Cpp11_GeneralizedUnions>();
     cppGenUni->genUni_simpleExample(); */
 
-    std::unique_ptr<Cpp11_DeclvalDecltype> declvalEx = std::make_unique<Cpp11_DeclvalDecltype>();
-    declvalEx->simpleExample();
+    //std::unique_ptr<Cpp11_DeclvalDecltype> declvalEx = std::make_unique<Cpp11_DeclvalDecltype>();
+    //declvalEx->simpleExample();
 
-    std::shared_ptr<Playground> play = std::make_unique<Playground>();
-    play->run();
+    //std::shared_ptr<Playground> play = std::make_unique<Playground>();
+    //play->run();
+    //Linux_Fork::SimpleExample();
+    Linux_Signals::simpleExample();
     return 0;
 }
