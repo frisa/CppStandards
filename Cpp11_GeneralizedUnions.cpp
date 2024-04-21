@@ -1,5 +1,6 @@
 #include "Cpp11_GeneralizedUnions.hpp"
 #include <iostream>
+#include <cstdint>
 
 union Register{
     int word;
